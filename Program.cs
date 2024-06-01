@@ -1,6 +1,5 @@
 ﻿
-
-using System.ComponentModel.Design;
+//need to add a way to stop error when hitting enter without typing anything.
 
 Console.Title = "Hunting the Manticore";
 
@@ -19,7 +18,7 @@ do
 while (mantStation < 0 || mantStation > 100);
 Console.Clear();
 
-bool CanonHit()
+bool CanonHit() //Did the city canon actually hit the manticore.
 {
     bool hit;
     if (mantStation == cityRange)
@@ -29,40 +28,40 @@ bool CanonHit()
     return hit;
 }
 
-int CanonDamage()
+int CanonDamage() //If the city hit the manticore base damage on turn every 3rd and 5th turn do bonus dmg.
 {
     
     if (round % 3 == 0 && round % 5 == 0)
     {
         Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine(" 10 MIGHTY FIRE-ELECTRIC BLAST damage!!! ");
+        Console.WriteLine("10 MIGHTY FIRE-ELECTRIC BLAST damage!!! ");
         Console.ResetColor();
         return 10;
     }
     else if (round % 3 == 0)
     {
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine(" 3 Fire Blast damage!! ");
+        Console.WriteLine("3 Fire Blast damage!! ");
         Console.ResetColor();
         return 3;
     }
     else if (round % 5 == 0)
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine(" 5 Lightning Blast damage!!! ");
+        Console.WriteLine("3 Lightning Blast damage!!! ");
         Console.ResetColor();
-        return 5;
+        return 3;
     }
     else
     {
         Console.ForegroundColor= ConsoleColor.White;
-        Console.WriteLine(" 1 normal damage!");
+        Console.WriteLine("1 normal damage!");
         Console.ResetColor();
         return 1;
     }
 }
 
-void CityShot()
+void CityShot() //decrement cityHealth 1 each turn and write the results of Player2's guess.
 {
     cityHealth--;
     if (cityRange == mantStation)
@@ -81,7 +80,7 @@ void CityShot()
     }
 }
 
-void StatusUpdate()
+void StatusUpdate() //deduct health from the manticore if it is actually hit based on CanonDamage
 {
     if (CanonHit())
     {
@@ -91,7 +90,7 @@ void StatusUpdate()
 
 Console.WriteLine("Player 2, it is your turn. ");
 
-while (cityHealth > 0 && mantHealth > 0)
+while (cityHealth > 0 && mantHealth > 0) //Continue while either is above 0 health.
 
 {
     round++;
@@ -107,22 +106,22 @@ while (cityHealth > 0 && mantHealth > 0)
     StatusUpdate();
     Console.WriteLine("_____________________________________________________________________________________________________________");
     
-    if (cityHealth <= 0)
-    {
-
-        Console.Clear();
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("YOU LOSE");
-        Console.WriteLine("The City of Consolas has been Destroyed! ");
-        Console.ResetColor();
-    }
-    else if (mantHealth <= 0)
+    if (mantHealth <= 0)
     {
 
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("YOU WON!!!");
         Console.WriteLine("The City of Consolas has been Saved!! ");
+        Console.ResetColor(); ;
+    }
+    else if (cityHealth <= 0)
+    {
+
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("YOU LOSE");
+        Console.WriteLine("The City of Consolas has been Destroyed ");
         Console.ResetColor();
     }
 }
